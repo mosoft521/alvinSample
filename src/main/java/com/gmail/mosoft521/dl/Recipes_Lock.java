@@ -14,14 +14,14 @@ import java.util.concurrent.CountDownLatch;
  */
 public class Recipes_Lock {
     static String lock_path = "/curator_recipes_lock_path";
-    static CuratorFramework client = CuratorFrameworkFactory.builder().connectString("domain1.book.zookeeper:2181").retryPolicy(new ExponentialBackoffRetry(1000, 3)).build();
+    static CuratorFramework client = CuratorFrameworkFactory.builder().connectString("localhost:2181").retryPolicy(new ExponentialBackoffRetry(1000, 3)).build();
 
     public static void main(String[] args) throws Exception {
         client.start();
         final InterProcessMutex lock = new InterProcessMutex(client, lock_path);
         final CountDownLatch down = new CountDownLatch(1);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -45,3 +45,35 @@ public class Recipes_Lock {
         down.countDown();
     }
 }
+/*
+生成的订单号是：10:29:49|969
+生成的订单号是：10:29:50|015
+生成的订单号是：10:29:50|062
+生成的订单号是：10:29:50|102
+生成的订单号是：10:29:50|131
+生成的订单号是：10:29:50|198
+生成的订单号是：10:29:50|232
+生成的订单号是：10:29:50|262
+生成的订单号是：10:29:50|304
+生成的订单号是：10:29:50|332
+生成的订单号是：10:29:50|357
+生成的订单号是：10:29:50|382
+生成的订单号是：10:29:50|421
+生成的订单号是：10:29:50|458
+生成的订单号是：10:29:50|473
+生成的订单号是：10:29:50|493
+生成的订单号是：10:29:50|503
+生成的订单号是：10:29:50|532
+生成的订单号是：10:29:50|550
+生成的订单号是：10:29:50|564
+生成的订单号是：10:29:50|580
+生成的订单号是：10:29:50|602
+生成的订单号是：10:29:50|632
+生成的订单号是：10:29:50|657
+生成的订单号是：10:29:50|672
+生成的订单号是：10:29:50|689
+生成的订单号是：10:29:50|707
+生成的订单号是：10:29:50|725
+生成的订单号是：10:29:50|738
+生成的订单号是：10:29:50|756
+ */
