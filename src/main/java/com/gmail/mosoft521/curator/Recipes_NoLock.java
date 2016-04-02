@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by Alvin on 2016/3/30.
+ * Curator典型使用场景(三)分布式锁：一个典型时间戳生成的并发问题
  */
 public class Recipes_NoLock {
     public static void main(String[] args) throws Exception {

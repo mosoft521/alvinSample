@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * 分布式锁
+ * Curator典型使用场景(三)分布式锁：使用Curator实现分布式锁功能
  */
 public class Recipes_Lock {
     static String lock_path = "/curator_recipes_lock_path";
