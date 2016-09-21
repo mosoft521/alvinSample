@@ -23,6 +23,15 @@ public class App {
         System.out.println(dateTime.toString("EEE MMM dd HH:mm:ss zzz yyyy", Locale.CHINESE));
         Date date = dateTime.toDate();
         System.out.println(date);
+
+
+        System.out.println("=====================================================================");
+        System.out.println(dateTime.getWeekOfWeekyear());
+        DateTime dateTime2 = dateTime.plusWeeks(9);
+        System.out.println(dateTime2);
+        System.out.println(dateTime2.dayOfWeek().getAsText()); //当天是星期几，例如：星期五
+        System.out.println(dateTime2.dayOfMonth().getMaximumValue());//当月day里面最大的值
+        System.out.println(dateTime.dayOfMonth().getMaximumValue());//当月day里面最大的值
     }
 }
 /*

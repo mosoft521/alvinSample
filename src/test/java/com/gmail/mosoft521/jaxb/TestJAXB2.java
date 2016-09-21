@@ -12,28 +12,50 @@ import java.io.StringWriter;
 /**
  * Created by Alvin on 2016/4/30 0030.
  */
-public class TestJAXB {
+public class TestJAXB2 {
     @Test
     public void testXml2Obj() throws Exception {
-        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("employee.xml");
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("notice.xml");
         byte[] bytes = new byte[is.available()];
         is.read(bytes);
         String xmlStr = new String(bytes);
-        JAXBContext context = JAXBContext.newInstance(Employee.class);
+        JAXBContext context = JAXBContext.newInstance(NoticeXmlVo.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        Employee emp = (Employee) unmarshaller.unmarshal(new StringReader(xmlStr));
-        System.out.println(emp);
+        NoticeXmlVo noticeXmlVo = (NoticeXmlVo) unmarshaller.unmarshal(new StringReader(xmlStr));
+        System.out.println(noticeXmlVo);
     }
 
     @Test
     public void testObj2Xml() {
-        Employee emp = new Employee();
-        emp.setAge(10);
-        emp.setGender("Male");
-        emp.setName("Jane");
-//        emp.setRole("Teacher");
-        emp.setRole("老师");
-        String xmlStr = TestJAXB.convertToXml(emp, "utf-8");
+        NoticeXmlVo noticeXmlVo = new NoticeXmlVo();
+
+        NoticeRangeVo specialMemeber = new NoticeRangeVo();
+        specialMemeber.setType("specialMemeber");
+        NoticeGroupVo noticeGroupVo = new NoticeGroupVo();
+        noticeGroupVo.setIsNotAllCustomers("Y");
+        noticeGroupVo.setSpecialMemeber("1111,2222");
+        specialMemeber.setGroup(noticeGroupVo);
+        noticeXmlVo.getRange().add(specialMemeber);
+
+        NoticeRangeVo member = new NoticeRangeVo();
+        member.setType("member");
+        noticeGroupVo = new NoticeGroupVo();
+        noticeGroupVo.setIsNotAllMember("Y");
+        noticeGroupVo.setMember("3333,4444");
+        member.setGroup(noticeGroupVo);
+        member.setRelation("Y");
+        noticeXmlVo.getRange().add(member);
+
+        NoticeRangeVo trader = new NoticeRangeVo();
+        trader.setType("trader");
+        noticeGroupVo = new NoticeGroupVo();
+        noticeGroupVo.setIsNotAllCustomers("Y");
+        noticeGroupVo.setMember("5555,6666");
+        trader.setGroup(noticeGroupVo);
+        trader.setAppoint("'7777','8888'");
+        noticeXmlVo.getRange().add(trader);
+
+        String xmlStr = TestJAXB2.convertToXml(noticeXmlVo, "utf-8");
 //        String xmlStr = TestJAXB.convertToXml(emp, "GBK");
         System.out.println(xmlStr);
     }

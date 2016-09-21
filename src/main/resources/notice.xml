@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <range type="specialMemeber">
+        <group isNotAllCustomers="Y">
+            <specialMemeber>1111,2222</specialMemeber>
+        </group>
+    </range>
+    <range type="member">
+        <group isNotAllMember="Y">
+            <member>3333,4444</member>
+        </group>
+        <relation>Y</relation>
+    </range>
+    <range type="trader">
+        <group isNotAllCustomers="Y">
+            <member>5555,6666</member>
+        </group>
+        <appoint>'7777','8888'</appoint>
+    </range>
+</root>
