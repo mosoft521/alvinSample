@@ -21,15 +21,6 @@ public class CollectionTest extends TestCase {
         gson = new Gson();
     }
 
-    private static class Entry {
-        @SerializedName("custom_value")
-        int value;
-
-        Entry(int value) {
-            this.value = value;
-        }
-    }
-
     @Test
     public void testSetDeserialization() {
         String json = "[{custom_value:1},{custom_value:2}]";
@@ -39,6 +30,15 @@ public class CollectionTest extends TestCase {
         assertEquals(2, set.size());
         for (Entry entry : set) {
             assertTrue(entry.value == 1 || entry.value == 2);
+        }
+    }
+
+    private static class Entry {
+        @SerializedName("custom_value")
+        int value;
+
+        Entry(int value) {
+            this.value = value;
         }
     }
 }

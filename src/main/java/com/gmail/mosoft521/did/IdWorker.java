@@ -1,17 +1,15 @@
 package com.gmail.mosoft521.did;
 
 public class IdWorker {
-    private final long workerId;
     private final static long twepoch = 1288834974657L;
-    private long sequence = 0L;
     private final static long workerIdBits = 4L;
     public final static long maxWorkerId = -1L ^ -1L << workerIdBits;
     private final static long sequenceBits = 10L;
-
+    public final static long sequenceMask = -1L ^ -1L << sequenceBits;
     private final static long workerIdShift = sequenceBits;
     private final static long timestampLeftShift = sequenceBits + workerIdBits;
-    public final static long sequenceMask = -1L ^ -1L << sequenceBits;
-
+    private final long workerId;
+    private long sequence = 0L;
     private long lastTimestamp = -1L;
 
     public IdWorker(final long workerId) {
@@ -22,6 +20,11 @@ public class IdWorker {
                     this.maxWorkerId));
         }
         this.workerId = workerId;
+    }
+
+    public static void main(String[] args) {
+        IdWorker worker2 = new IdWorker(2);
+        System.out.println(worker2.nextId());
     }
 
     public synchronized long nextId() {
@@ -65,11 +68,5 @@ public class IdWorker {
 
     private long timeGen() {
         return System.currentTimeMillis();
-    }
-
-
-    public static void main(String[] args) {
-        IdWorker worker2 = new IdWorker(2);
-        System.out.println(worker2.nextId());
     }
 }

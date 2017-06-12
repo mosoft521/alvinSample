@@ -19,8 +19,7 @@ public class SortListString {
 
         //升序
         Collections.sort(list, Collator.getInstance(java.util.Locale.CHINA));//注意：是根据的汉字的拼音的字母排序的，而不是根据汉字一般的排序方法
-        for(int i=0;i<list.size();i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
         }
         System.out.println("");

@@ -19,15 +19,6 @@ public class PropertySetDescriptor extends DocumentDescriptor {
     protected PropertySet propertySet;
 
     /**
-     * <p>Returns this {@link PropertySetDescriptor}'s {@link
-     * PropertySet}.</p>
-     */
-    public PropertySet getPropertySet() {
-        return propertySet;
-    }
-
-
-    /**
      * <p>Creates a {@link PropertySetDescriptor} by reading a {@link
      * PropertySet} from a {@link DocumentInputStream}.</p>
      *
@@ -46,6 +37,14 @@ public class PropertySetDescriptor extends DocumentDescriptor {
             IOException {
         super(name, path, stream, nrOfBytesToDump);
         propertySet = PropertySetFactory.create(stream);
+    }
+
+    /**
+     * <p>Returns this {@link PropertySetDescriptor}'s {@link
+     * PropertySet}.</p>
+     */
+    public PropertySet getPropertySet() {
+        return propertySet;
     }
 
 }

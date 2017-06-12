@@ -13,7 +13,7 @@ public class MyComparator implements Comparator {
 
         User sdto2 = (User) o2;
 
-        return sdto1.getAge()-sdto2.getAge();
+        return sdto1.getAge() - sdto2.getAge();
 
     }
 }

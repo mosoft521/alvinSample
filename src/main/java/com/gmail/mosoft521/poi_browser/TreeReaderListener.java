@@ -57,6 +57,10 @@ public class TreeReaderListener implements POIFSReaderListener {
      * label which should identify a POI filesystem.</p>
      */
     protected String filename;
+    /**
+     * <p>The number of bytes to dump.</p>
+     */
+    private int nrOfBytes = 50;
 
 
     /**
@@ -77,20 +81,13 @@ public class TreeReaderListener implements POIFSReaderListener {
         pathToNode = new HashMap<Object, MutableTreeNode>(15); // Should be a reasonable guess.
     }
 
-
-    /**
-     * <p>The number of bytes to dump.</p>
-     */
-    private int nrOfBytes = 50;
-
-    public void setNrOfBytes(final int nrOfBytes) {
-        this.nrOfBytes = nrOfBytes;
-    }
-
     public int getNrOfBytes() {
         return nrOfBytes;
     }
 
+    public void setNrOfBytes(final int nrOfBytes) {
+        this.nrOfBytes = nrOfBytes;
+    }
 
     /**
      * <p>A document in the POI filesystem has been opened for

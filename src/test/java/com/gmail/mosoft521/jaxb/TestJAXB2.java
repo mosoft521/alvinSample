@@ -13,6 +13,27 @@ import java.io.StringWriter;
  * Created by Alvin on 2016/4/30 0030.
  */
 public class TestJAXB2 {
+    public static String convertToXml(Object obj, String encoding) {
+        String result = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(obj.getClass());
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
+
+//            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);//作为XML片段
+
+            StringWriter writer = new StringWriter();
+            marshaller.marshal(obj, writer);
+            result = writer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        return result;
+        return result.replace("standalone=\"yes\"", ""); //删除standalone="yes"
+    }
+
     @Test
     public void testXml2Obj() throws Exception {
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("notice.xml");
@@ -58,27 +79,6 @@ public class TestJAXB2 {
         String xmlStr = TestJAXB2.convertToXml(noticeXmlVo, "utf-8");
 //        String xmlStr = TestJAXB.convertToXml(emp, "GBK");
         System.out.println(xmlStr);
-    }
-
-    public static String convertToXml(Object obj, String encoding) {
-        String result = null;
-        try {
-            JAXBContext context = JAXBContext.newInstance(obj.getClass());
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
-
-//            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);//作为XML片段
-
-            StringWriter writer = new StringWriter();
-            marshaller.marshal(obj, writer);
-            result = writer.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        return result;
-        return result.replace("standalone=\"yes\"", ""); //删除standalone="yes"
     }
 }
 /*

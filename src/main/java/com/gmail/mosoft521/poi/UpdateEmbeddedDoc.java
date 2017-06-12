@@ -24,18 +24,15 @@ import java.util.List;
  * embedded into a WordprocessingML document. Note that the test has currently
  * only been conducted with a binary Excel workbook and NOT yet with a
  * SpreadsheetML workbook embedded into the document.
- *
  * <p>
- *     This code was successfully tested with the following file from the POI test collection:
- *     http://svn.apache.org/repos/asf/poi/trunk/test-data/document/EmbeddedDocument.docx
+ * <p>
+ * This code was successfully tested with the following file from the POI test collection:
+ * http://svn.apache.org/repos/asf/poi/trunk/test-data/document/EmbeddedDocument.docx
  * </p>
  *
  * @author Mark B
  */
 public class UpdateEmbeddedDoc {
-
-    private XWPFDocument doc = null;
-    private File docFile = null;
 
     private static final int SHEET_NUM = 0;
     private static final int ROW_NUM = 0;
@@ -43,6 +40,8 @@ public class UpdateEmbeddedDoc {
     private static final double NEW_VALUE = 100.98D;
     private static final String BINARY_EXTENSION = "xls";
     private static final String OPENXML_EXTENSION = "xlsx";
+    private XWPFDocument doc = null;
+    private File docFile = null;
 
     /**
      * Create a new instance of the UpdateEmbeddedDoc class using the following
@@ -85,21 +84,37 @@ public class UpdateEmbeddedDoc {
     }
 
     /**
+     * Code to test updating of the embedded Excel workbook.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        try {
+            UpdateEmbeddedDoc ued = new UpdateEmbeddedDoc(args[0]);
+            ued.updateEmbeddedDoc();
+            ued.checkUpdatedDoc();
+        } catch (Exception ex) {
+            System.out.println(ex.getClass().getName());
+            System.out.println(ex.getMessage());
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    /**
      * Called to update the embedded Excel workbook. As the format and structire
      * of the workbook are known in advance, all this code attempts to do is
      * write a new value into the first cell on the first row of the first
      * worksheet. Prior to executing this method, that cell will contain the
      * value 1.
      *
-     * @throws org.apache.poi.openxml4j.exceptions.OpenXML4JException
-     *                             Rather
-     *                             than use the specific classes (HSSF/XSSF) to handle the embedded
-     *                             workbook this method uses those defeined in the SS stream. As
-     *                             a result, it might be the case that a SpreadsheetML file is
-     *                             opened for processing, throwing this exception if that file is
-     *                             invalid.
-     * @throws java.io.IOException Thrown if a problem occurs in the underlying
-     *                             file system.
+     * @throws org.apache.poi.openxml4j.exceptions.OpenXML4JException Rather
+     *                                                                than use the specific classes (HSSF/XSSF) to handle the embedded
+     *                                                                workbook this method uses those defeined in the SS stream. As
+     *                                                                a result, it might be the case that a SpreadsheetML file is
+     *                                                                opened for processing, throwing this exception if that file is
+     *                                                                invalid.
+     * @throws java.io.IOException                                    Thrown if a problem occurs in the underlying
+     *                                                                file system.
      */
     public void updateEmbeddedDoc() throws OpenXML4JException, IOException {
         Workbook workbook = null;
@@ -149,15 +164,14 @@ public class UpdateEmbeddedDoc {
      * to be thrown when the WorkbookFactory.createWorkbook(InputStream) method
      * is executed.
      *
-     * @throws org.apache.poi.openxml4j.exceptions.OpenXML4JException
-     *                             Rather
-     *                             than use the specific classes (HSSF/XSSF) to handle the embedded
-     *                             workbook this method uses those defeined in the SS stream. As
-     *                             a result, it might be the case that a SpreadsheetML file is
-     *                             opened for processing, throwing this exception if that file is
-     *                             invalid.
-     * @throws java.io.IOException Thrown if a problem occurs in the underlying
-     *                             file system.
+     * @throws org.apache.poi.openxml4j.exceptions.OpenXML4JException Rather
+     *                                                                than use the specific classes (HSSF/XSSF) to handle the embedded
+     *                                                                workbook this method uses those defeined in the SS stream. As
+     *                                                                a result, it might be the case that a SpreadsheetML file is
+     *                                                                opened for processing, throwing this exception if that file is
+     *                                                                invalid.
+     * @throws java.io.IOException                                    Thrown if a problem occurs in the underlying
+     *                                                                file system.
      */
     public void checkUpdatedDoc() throws OpenXML4JException, IOException {
         Workbook workbook = null;
@@ -180,23 +194,6 @@ public class UpdateEmbeddedDoc {
 //                    assertEquals(cell.getNumericCellValue(), NEW_VALUE, 0.0001);
                 }
             }
-        }
-    }
-
-    /**
-     * Code to test updating of the embedded Excel workbook.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        try {
-            UpdateEmbeddedDoc ued = new UpdateEmbeddedDoc(args[0]);
-            ued.updateEmbeddedDoc();
-            ued.checkUpdatedDoc();
-        } catch (Exception ex) {
-            System.out.println(ex.getClass().getName());
-            System.out.println(ex.getMessage());
-            ex.printStackTrace(System.out);
         }
     }
 }

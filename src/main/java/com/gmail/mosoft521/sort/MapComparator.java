@@ -14,7 +14,7 @@ public class MapComparator implements Comparator {
 
         Map map2 = (Map) o2;
 
-        return (int)map1.get("id") - (int)map2.get("id");
+        return (int) map1.get("id") - (int) map2.get("id");
 
     }
 }

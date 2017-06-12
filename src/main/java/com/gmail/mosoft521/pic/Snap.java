@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class Snap {
-    public static void main(String[] args) throws MalformedURLException, IOException, URISyntaxException, AWTException,Exception {
+    public static void main(String[] args) throws MalformedURLException, IOException, URISyntaxException, AWTException, Exception {
         // 此方法仅适用于JdK1.6及以上版本
         Desktop.getDesktop().browse(new URL("http://map.baidu.com/").toURI());
         Process p = Runtime.getRuntime().exec("explorer http://map.baidu.com");
@@ -45,7 +45,7 @@ public class Snap {
     /**
      * J2SE 5及之前可使用以下代码<br>
      */
-    private  static  void openURL(String url) {
+    private static void openURL(String url) {
         String osName = System.getProperty("os.name");
         System.out.println("###osName:" + osName);
 // System.gc();
@@ -56,8 +56,8 @@ public class Snap {
             if (osName.startsWith("Mac")) {// Mac OS
                 Class fileMgr = Class.forName("com.apple.eio.FileManager");
                 Method openURL = fileMgr.getDeclaredMethod("openURL",
-                        new Class[] { String.class });
-                openURL.invoke(null, new Object[] { url });
+                        new Class[]{String.class});
+                openURL.invoke(null, new Object[]{url});
             } else if (osName.startsWith("Windows")) {// Windows
                 p = Runtime.getRuntime().exec(
                         "rundll32 url.dll,FileProtocolHandler " + url);
@@ -68,12 +68,12 @@ public class Snap {
                 exitCode = p.waitFor();
                 System.out.println("###exitCode:" + exitCode);
             } else { // Unix or Linux
-                String[] browsers = { "firefox", "opera", "konqueror",
-                        "epiphany", "mozilla", "netscape" };
+                String[] browsers = {"firefox", "opera", "konqueror",
+                        "epiphany", "mozilla", "netscape"};
                 String browser = null;
                 for (int count = 0; count < browsers.length && browser == null; count++) {
                     if (Runtime.getRuntime().exec(
-                            new String[] { "which", browsers[count] })
+                            new String[]{"which", browsers[count]})
                             .waitFor() == 0) {
                         browser = browsers[count];
                     }
@@ -81,7 +81,7 @@ public class Snap {
                 if (browser == null) {
                     throw new Exception("Could not find web browser");
                 } else {
-                    Runtime.getRuntime().exec(new String[] { browser, url });
+                    Runtime.getRuntime().exec(new String[]{browser, url});
                 }
             }
             Thread.sleep(10000);

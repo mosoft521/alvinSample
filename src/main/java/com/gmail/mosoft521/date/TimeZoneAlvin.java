@@ -1,7 +1,6 @@
 package com.gmail.mosoft521.date;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -36,7 +35,7 @@ public class TimeZoneAlvin {
 //        }
 
 
-        DateTimeFormatter format = DateTimeFormat .forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
         DateTime dateTime = DateTime.parse("2016-10-21 14:29:22", format);
 
