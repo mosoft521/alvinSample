@@ -1,4 +1,4 @@
-package com.gmail.mosoft521.thread;
+package com.gmail.mosoft521.thread.semaphore01;
 
 //8.   创建一个名为Job的类并一定实现Runnable 接口。这个类实现把文档传送到打印机的任务。
 public class Job implements Runnable {
