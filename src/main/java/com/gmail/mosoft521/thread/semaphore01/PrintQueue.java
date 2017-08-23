@@ -1,4 +1,4 @@
-package com.gmail.mosoft521.thread;
+package com.gmail.mosoft521.thread.semaphore01;
 
 import java.util.concurrent.Semaphore;
 

@@ -1,4 +1,4 @@
-package com.gmail.mosoft521.thread;
+package com.gmail.mosoft521.thread.semaphore01;
 
 //15. 实现例子的main类，创建名为 Main的类并实现main()方法。
 public class Main {
