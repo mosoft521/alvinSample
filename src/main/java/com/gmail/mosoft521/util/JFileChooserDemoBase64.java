@@ -16,8 +16,8 @@ class Note implements ActionListener {
     JFrame frame = new JFrame("My Note");
     JTextArea textArea = new JTextArea(8, 10);//定义文本区
     JPanel butp = new JPanel();   //创建一个面板，用于加载按钮组件
-    JButton open = new JButton("打开文件");
-    JButton save = new JButton("保存文件");
+    JButton open = new JButton("文件转Base64字符串");
+    JButton save = new JButton("Base64字符串转文件");
     JLabel label = new JLabel("现在没有打开的文件");
 
     public Note() {
@@ -59,6 +59,26 @@ class Note implements ActionListener {
                     byte[] signBytes = FileUtils.readFileToByteArray(file);
                     String signString = Base64.encodeBase64String(signBytes);
                     this.textArea.append(signString);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } else if (e.getSource() == this.save) {
+            fileChooser.setApproveButtonText("确定");
+            result = fileChooser.showOpenDialog(this.frame);
+            if (result == JFileChooser.APPROVE_OPTION) {//选择的是确定按钮
+                file = fileChooser.getSelectedFile();//得到选择的文件
+                this.label.setText("保存的文件名称为：" + file.getName());
+            } else if (result == JFileChooser.CANCEL_OPTION) {//选择的是取消按钮
+                this.label.setText("没有选择任何文件");
+            } else {
+                this.label.setText("操作出现错误");
+            }
+            if (file != null) {
+                try {
+                    String base64 = this.textArea.getText();
+                    byte[] bytes = Base64.decodeBase64(base64);
+                    FileUtils.writeByteArrayToFile(file, bytes);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
