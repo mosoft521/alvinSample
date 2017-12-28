@@ -32,8 +32,8 @@ public class ImageDownloader {
         ImageDownloader imageDownloader = new ImageDownloader();
         imageDownloader.initApacheHttpClient();
 
-        String imageUrl = "https://ibclaty.j.com/niku/ui/uitk/images/s.gif";
-        String filePath = "D:\\test.jpg";
+        String imageUrl = "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png";
+        String filePath = "D:\\baidu.png";
 
         imageDownloader.fetchContent(imageUrl, filePath);
 
@@ -62,7 +62,7 @@ public class ImageDownloader {
     public void fetchContent(String imageUrl, String filePath) throws ClientProtocolException, IOException {
 
         HttpGet httpget = new HttpGet(imageUrl);
-        httpget.setHeader("Referer", "http://www.google.com");
+        httpget.setHeader("Referer", "http://www.baidu.com");
 
         System.out.println("executing request " + httpget.getURI());
         CloseableHttpResponse response = httpclient.execute(httpget);
