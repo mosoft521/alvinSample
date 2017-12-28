@@ -1,11 +1,7 @@
 package com.gmail.mosoft521.httpclient;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
@@ -16,8 +12,26 @@ import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class ImageDownloader {
+
     private static final String USER_AGENT = "Mozilla/5.0 Firefox/26.0";
+    private static final int SIZE = 2;
+    private static final String EXT = ".jpg";
+    private static final char PAD_CHAR = '0';
+    private static final String DRIVER = "E:\\picDown\\08x\\";
+    private static final int START = 1;
+
+    private static final int END = 50;
+    private static final String REFERER_HEADER = "http://www.mzitu.com/52180/";
+    private static final String IMAGE_URL_HEADER = "http://i.meizitu.net/2015/11/";
+    private static final String GROUP = "08x";
+
 
     private static Logger logger = LoggerFactory.getLogger(ImageDownloader.class);
 
@@ -32,10 +46,11 @@ public class ImageDownloader {
         ImageDownloader imageDownloader = new ImageDownloader();
         imageDownloader.initApacheHttpClient();
 
-        String imageUrl = "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png";
-        String filePath = "D:\\baidu.png";
-
-        imageDownloader.fetchContent(imageUrl, filePath);
+        for (int i = START; i <= END; i++) {
+            String imageUrl = IMAGE_URL_HEADER + GROUP + StringUtils.leftPad(Integer.toString(i), SIZE, PAD_CHAR) + EXT;//"http://i.meizitu.net/2017/10/06c01.jpg";
+            String filePath = DRIVER + GROUP + StringUtils.leftPad(Integer.toString(i), SIZE, PAD_CHAR) + EXT;//"D:\\06c01.jpg";
+            imageDownloader.fetchContent(i + 1, imageUrl, filePath);
+        }
 
         imageDownloader.destroyApacheHttpClient();
     }
@@ -59,10 +74,10 @@ public class ImageDownloader {
         }
     }
 
-    public void fetchContent(String imageUrl, String filePath) throws ClientProtocolException, IOException {
+    public void fetchContent(int i, String imageUrl, String filePath) throws ClientProtocolException, IOException {
 
         HttpGet httpget = new HttpGet(imageUrl);
-        httpget.setHeader("Referer", "http://www.baidu.com");
+        httpget.setHeader("Referer", REFERER_HEADER + i);
 
         System.out.println("executing request " + httpget.getURI());
         CloseableHttpResponse response = httpclient.execute(httpget);
