@@ -24,13 +24,14 @@ public class ImageDownloader {
     private static final int SIZE = 2;
     private static final String EXT = ".jpg";
     private static final char PAD_CHAR = '0';
-    private static final String DRIVER = "E:\\picDown\\08x\\";
+    private static final String DRIVER = "E:\\picDown\\02b\\";
     private static final int START = 1;
 
-    private static final int END = 50;
-    private static final String REFERER_HEADER = "http://www.mzitu.com/52180/";
-    private static final String IMAGE_URL_HEADER = "http://i.meizitu.net/2015/11/";
-    private static final String GROUP = "08x";
+    private static final int END = 65;
+    private static final String REFERER_HEADER = "http://www.mzitu.com/83881";
+    private static final String IMAGE_URL_HEADER = "http://i.meizitu.net/2017/04/";
+    private static final String GROUP = "02b";
+    private static final boolean NEED_GROUP = true;
 
 
     private static Logger logger = LoggerFactory.getLogger(ImageDownloader.class);
@@ -47,8 +48,8 @@ public class ImageDownloader {
         imageDownloader.initApacheHttpClient();
 
         for (int i = START; i <= END; i++) {
-            String imageUrl = IMAGE_URL_HEADER + GROUP + StringUtils.leftPad(Integer.toString(i), SIZE, PAD_CHAR) + EXT;//"http://i.meizitu.net/2017/10/06c01.jpg";
-            String filePath = DRIVER + GROUP + StringUtils.leftPad(Integer.toString(i), SIZE, PAD_CHAR) + EXT;//"D:\\06c01.jpg";
+            String imageUrl = IMAGE_URL_HEADER + (NEED_GROUP ? GROUP : "") + StringUtils.leftPad(Integer.toString(i), SIZE, PAD_CHAR) + EXT;//"http://i.meizitu.net/2017/10/06c01.jpg";
+            String filePath = DRIVER + (NEED_GROUP ? GROUP : "") + StringUtils.leftPad(Integer.toString(i), SIZE, PAD_CHAR) + EXT;//"D:\\06c01.jpg";
             imageDownloader.fetchContent(i + 1, imageUrl, filePath);
         }
 
