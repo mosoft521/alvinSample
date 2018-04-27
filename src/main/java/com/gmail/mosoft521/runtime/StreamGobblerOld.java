@@ -24,27 +24,6 @@ public class StreamGobblerOld extends Thread {
         this.os = redirect;
     }
 
-    public static void main(String args[]) {
-        try {
-            FileOutputStream fos = new FileOutputStream("d:/logs/a.log");
-            Runtime rt = Runtime.getRuntime();
-            Process proc = rt.exec("cmd.exe /C fmpp -S D:\\tools\\fmpp\\docs\\examples\\qtour_step1\\src\\ -O D:\\tools\\fmpp\\docs\\examples\\qtour_step1\\out\\");
-
-            // 重定向输出流和错误流
-            StreamGobblerOld errorGobbler = new StreamGobblerOld(proc.getErrorStream(), "ERROR");
-            StreamGobblerOld outputGobbler = new StreamGobblerOld(proc.getInputStream(), "OUTPUT", fos);
-
-            errorGobbler.start();
-            outputGobbler.start();
-            int exitVal = proc.waitFor();
-            System.out.println("ExitValue: " + exitVal);
-            fos.flush();
-            fos.close();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }
-
     public void run() {
         try {
             PrintWriter pw = null;
@@ -65,4 +44,38 @@ public class StreamGobblerOld extends Thread {
             ioe.printStackTrace();
         }
     }
+
+    public static void main(String args[]) {
+        try {
+            FileOutputStream fos = new FileOutputStream("d:/logs/a.log");
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec("cmd.exe /C fmpp -S D:\\tools\\fmpp\\docs\\examples\\qtour_step1\\src\\ -O D:\\tools\\fmpp\\docs\\examples\\qtour_step1\\out\\");
+
+            // 重定向输出流和错误流
+            StreamGobblerOld errorGobbler = new StreamGobblerOld(proc.getErrorStream(), "ERROR");
+            StreamGobblerOld outputGobbler = new StreamGobblerOld(proc.getInputStream(), "OUTPUT", fos);
+
+            errorGobbler.start();
+            outputGobbler.start();
+            int exitVal = proc.waitFor();
+            System.out.println("ExitValue: " + exitVal);
+            fos.flush();
+            fos.close();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
 }
+/*
+OUTPUT>- Copying: falcon.png
+OUTPUT>- Executing: index.html
+OUTPUT>- Executing: subdir\something.html
+OUTPUT>
+OUTPUT>*** DONE ***
+OUTPUT>
+OUTPUT>2 executed + 0 rendered + 1 copied = 3 successfully processed
+OUTPUT>0 failed, 0 warning(s)
+OUTPUT>Time elapsed: 0.06 seconds
+OUTPUT>
+ExitValue: 0
+ */
