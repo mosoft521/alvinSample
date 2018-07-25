@@ -32,6 +32,6 @@ public class Md5UtilTest {
     }
 
     public static void main(String[] args) {
-        System.out.println(sign("d04b4f53d3494d2c9350b37ca4b7560d","353486f75dce4a32b623c2f46a80bdb7","zjw"));
+        System.out.println(sign("d04b4f53d3494d2c9350b37ca4b7560d", "353486f75dce4a32b623c2f46a80bdb7", "zjw"));
     }
 }

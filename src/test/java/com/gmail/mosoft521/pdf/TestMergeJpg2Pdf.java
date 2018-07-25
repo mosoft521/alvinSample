@@ -28,7 +28,7 @@ public class TestMergeJpg2Pdf {
         PdfContentByte over;
         Image img = Image.getInstance("C:/Users/zhangjiawen/Pictures/sign111.jpg");
         width = width - img.getWidth();
-        height = height/2 - img.getHeight();
+        height = height / 2 - img.getHeight();
         System.out.println("width:" + width);
         System.out.println("height:" + height);
         img.setAbsolutePosition(width, height);

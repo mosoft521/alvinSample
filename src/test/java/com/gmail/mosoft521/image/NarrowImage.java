@@ -12,8 +12,19 @@ import java.io.FileOutputStream;
 public class NarrowImage {
 
 
+    public static void main(String[] args) {
+
+        // 这儿填写你存放要缩小图片的文件夹全地址
+        String inputFoler = "C:\\Users\\zhangjiawen\\Pictures\\sign111.jpg";
+        // 这儿填写你转化后的图片存放的文件夹
+        String outputFolder = "C:\\Users\\zhangjiawen\\Pictures\\sign222.jpg";
+
+        NarrowImage narrowImage = new NarrowImage();
+        narrowImage.writeHighQuality(narrowImage.zoomImage(inputFoler), outputFolder);
+    }
+
     /**
-     * @param src          原始图像
+     * @param src 原始图像
      * @return 返回处理后的图像
      */
     public BufferedImage zoomImage(String src) {
@@ -28,18 +39,18 @@ public class NarrowImage {
             }
             BufferedImage im = ImageIO.read(srcfile);
 
-			/* 原始图像的宽度和高度 */
+            /* 原始图像的宽度和高度 */
             int width = im.getWidth();
             int height = im.getHeight();
 
             //压缩计算
             float resizeTimes = 0.3f;  /*这个参数是要转化成的倍数,如果是1就是转化成1倍*/
 
-			/* 调整后的图片的宽度和高度 */
+            /* 调整后的图片的宽度和高度 */
             int toWidth = (int) (width * resizeTimes);
             int toHeight = (int) (height * resizeTimes);
 
-			/* 新生成结果图片 */
+            /* 新生成结果图片 */
             result = new BufferedImage(toWidth, toHeight,
                     BufferedImage.TYPE_INT_RGB);
 
@@ -58,30 +69,18 @@ public class NarrowImage {
 
     public boolean writeHighQuality(BufferedImage im, String fileFullPath) {
         try {
-                /*输出到文件流*/
+            /*输出到文件流*/
             FileOutputStream newimage = new FileOutputStream(fileFullPath);
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(newimage);
             JPEGEncodeParam jep = JPEGCodec.getDefaultJPEGEncodeParam(im);
-                /* 压缩质量 */
+            /* 压缩质量 */
             jep.setQuality(0.9f, true);
             encoder.encode(im, jep);
-               /*近JPEG编码*/
+            /*近JPEG编码*/
             newimage.close();
             return true;
         } catch (Exception e) {
             return false;
         }
-    }
-
-
-    public static void main(String[] args) {
-
-        // 这儿填写你存放要缩小图片的文件夹全地址
-        String inputFoler = "C:\\Users\\zhangjiawen\\Pictures\\sign111.jpg";
-        // 这儿填写你转化后的图片存放的文件夹
-        String outputFolder = "C:\\Users\\zhangjiawen\\Pictures\\sign222.jpg";
-
-        NarrowImage narrowImage = new NarrowImage();
-        narrowImage.writeHighQuality(narrowImage.zoomImage(inputFoler), outputFolder);
     }
 }

@@ -1,7 +1,5 @@
 package com.gmail.mosoft521.env;
 
-import java.util.Map;
-
 /**
  * 获取系统的环境变量
  * 对于windows在系统属性-->高级-->环境变量中设置的变量将显示在此

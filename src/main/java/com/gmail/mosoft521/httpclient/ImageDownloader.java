@@ -32,14 +32,9 @@ public class ImageDownloader {
     private static final String IMAGE_URL_HEADER = "http://i.meizitu.net/2017/04/";
     private static final String GROUP = "02b";
     private static final boolean NEED_GROUP = true;
-
-
-    private static Logger logger = LoggerFactory.getLogger(ImageDownloader.class);
-
     private static final int TIMEOUT_SECONDS = 120;
-
     private static final int POOL_SIZE = 120;
-
+    private static Logger logger = LoggerFactory.getLogger(ImageDownloader.class);
     private static CloseableHttpClient httpclient;
 
     public static void main(String[] args) throws ClientProtocolException, IOException {

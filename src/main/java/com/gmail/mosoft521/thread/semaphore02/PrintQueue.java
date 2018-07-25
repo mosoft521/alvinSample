@@ -8,14 +8,12 @@ import java.util.concurrent.locks.ReentrantLock;
 //1.   创建一个会实现print queue的类名为 PrintQueue。
 public class PrintQueue {
 
-    //②-1.  如我们之前提到的，你将实现semaphores来修改print queue例子。打开PrintQueue类并声明一个boolean array名为 freePrinters。这个array储存空闲的等待打印任务的和正在打印文档的printers。
-    private boolean freePrinters[];
-
-    //②-2.   接着，声明一个名为lockPrinters的Lock对象。将要使用这个对象来保护freePrinters array的访问。
-    private Lock lockPrinters;
-
     //2.   声明一个对象为Semaphore，称它为semaphore。
     private final Semaphore semaphore;
+    //②-1.  如我们之前提到的，你将实现semaphores来修改print queue例子。打开PrintQueue类并声明一个boolean array名为 freePrinters。这个array储存空闲的等待打印任务的和正在打印文档的printers。
+    private boolean freePrinters[];
+    //②-2.   接着，声明一个名为lockPrinters的Lock对象。将要使用这个对象来保护freePrinters array的访问。
+    private Lock lockPrinters;
 
     //②-3.   修改类的构造函数并初始化新声明的对象们。freePrinters array 有3个元素，全部初始为真值。semaphore用3作为它的初始值。
     public PrintQueue() {

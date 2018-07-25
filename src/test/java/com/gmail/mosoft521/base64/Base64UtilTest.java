@@ -11,7 +11,6 @@ public class Base64UtilTest {
     /**
      * http://www.9gty.net/upload/data/avatar/000/03/21/65_avatar_middle.jpg
      * <body style="margin: 0px; background: #0e0e0e;"><img style="-webkit-user-select: none;background-position: 0px 0px, 10px 10px;background-size: 20px 20px;background-image:linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%),linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);" src="http://www.9gty.net/upload/data/avatar/000/03/21/65_avatar_middle.jpg"></body>
-     *
      */
     @Test
     public void base64StringToByte001() {
