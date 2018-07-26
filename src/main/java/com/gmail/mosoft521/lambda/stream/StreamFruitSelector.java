@@ -5,9 +5,6 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-/**
- * Created by wangwenjun on 2015/8/8.
- */
 public class StreamFruitSelector extends FruitSelector {
     @Override
     protected List<Double> doFilter(List<Fruit> fruits) {
