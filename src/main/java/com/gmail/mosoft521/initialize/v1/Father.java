@@ -19,7 +19,7 @@ public class Father {
 
     public Father() {
         System.out.println("父类无参构造函数初始化完成");
-        show();
+        show();//多态【动态绑定】
     }
 
     public void show() {
