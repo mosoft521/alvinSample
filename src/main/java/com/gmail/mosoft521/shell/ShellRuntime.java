@@ -24,6 +24,7 @@ public class ShellRuntime {
 
     public static void main(String[] args) throws Exception {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+        System.out.println("===ShellRuntime===");
 
         String homeDirectory = System.getProperty("user.home");
         Process process;

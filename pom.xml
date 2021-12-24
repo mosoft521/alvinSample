@@ -27,7 +27,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <compilerArguments>
-                        <verbose />
+                        <verbose/>
                         <bootclasspath>${java.home}\lib\rt.jar;${java.home}\lib\jce.jar</bootclasspath>
                     </compilerArguments>
                 </configuration>
@@ -43,6 +43,28 @@
                     <systemPropertyVariables>
                         <buildTestDir>${java.io.tmpdir}</buildTestDir>
                     </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.gmail.mosoft521.shell.ShellRuntime</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <version>${project.version}</version>
+                            <!--<Class-Path>/home/jiashubing/myfile/ddts/cli/plugins/ddts.core-0.0.1-SNAPSHOT.jar</Class-Path>-->
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
@@ -168,21 +190,21 @@
             <version>${jasperreports.version}</version>
         </dependency>
         <!--slef install-->
-<!--        <dependency>-->
-<!--            <groupId>com.lowagie</groupId>-->
-<!--            <artifactId>itext</artifactId>-->
-<!--            <version>2.1.7</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.lowagie</groupId>-->
-<!--            <artifactId>itextasian</artifactId>-->
-<!--            <version>2.1.7</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.lowagie</groupId>-->
-<!--            <artifactId>itextasiancmaps</artifactId>-->
-<!--            <version>2.1.7</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.lowagie</groupId>-->
+        <!--            <artifactId>itext</artifactId>-->
+        <!--            <version>2.1.7</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.lowagie</groupId>-->
+        <!--            <artifactId>itextasian</artifactId>-->
+        <!--            <version>2.1.7</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.lowagie</groupId>-->
+        <!--            <artifactId>itextasiancmaps</artifactId>-->
+        <!--            <version>2.1.7</version>-->
+        <!--        </dependency>-->
         <!--slef install-->
 
         <!--HttpClient-->

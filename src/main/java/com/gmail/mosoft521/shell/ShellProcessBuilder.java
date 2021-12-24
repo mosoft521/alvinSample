@@ -25,6 +25,7 @@ public class ShellProcessBuilder {
 
     public static void main(String[] args) throws Exception {
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+        System.out.println("===ShellProcessBuilder===");
 
         ProcessBuilder builder = new ProcessBuilder();
         if (isWindows) {
