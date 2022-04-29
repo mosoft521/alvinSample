@@ -54,9 +54,13 @@ public class UrlZipTest {
 
     //1-2 byte[]转临时文件
     public static File createTmpFile(byte[] bytes, String fileName) throws IOException {
+        //todo:必需保证文件名里有.
         String[] fileNames = fileName.split("\\.");
         File tempFile = File.createTempFile(fileNames[0], "." + fileNames[1]);
         FileUtil.writeBytes(bytes, tempFile);
+        //todo：输出一下文件名便于调试观察
+        System.out.println(tempFile.getName());
+        System.out.println(tempFile.getAbsolutePath());
         return tempFile;
     }
 
@@ -105,8 +109,11 @@ public class UrlZipTest {
         byte[] b1 = getFileUrlByte("http://yonbip-biz-dev.yonyouauto.com/iuap-apcom-file/rest/v1/server/file/6267d8f26da925003ece065c/ocstream?downThumb=false&token=KkuwudqZwFyRFH-f5o-UVzRIoJ1vp7rEtVJNXYFRdr6uqurwAX_TF26AQNPPgzCn8uBGNgHXFjwCDZMfH7PE8kfApuJhmlKVMj0G7YALrCO40LJBjKo07q5D1xCN9AwpAR_r3CHpLhzqqFfPGBXrJ_Eevdw9qZglMdg6RGyp96rQYmEjUUElLgDt94yIKb7GxgoMNk6PrA4Osq1bQ-sAqc-Tv3dlCd4XDBVv9YqN8NWxSFr722uJpsbi62Z1cN9mX63IjueQ8ZAaenTjpfk-0gmVFWFuC3wcBAYxJaIQ2vnHHumPrAMtWlWwLY4pcfsEjwDZdyuajlRnfA1b6OaJOQ&isWaterMark=false");
         byte[] b2 = getFileUrlByte("http://yonbip-biz-dev.yonyouauto.com/iuap-apcom-file/rest/v1/server/file/6267d92e6da925003ece065d/ocstream?downThumb=false&token=NwBhD5jQ08m2a9L7XKNge3gfmLhvWBv0aGfbPQwMj28cqV-vP4WFwKCROFLiL90uEcDrcK3Noct6N4HnCVnJMi7onLHVixjFg04iYjAJ1SvWypFhcXVmmyCspnSIfuHOfVeHUbnqRET2O4Yvinq0fTdxSanzUIXJVaJPBZZO-abJxQ2ZZOGH4ApyUoU4JJAdiD_0YG9K3_UpIg8eo_j8vbvat8QtA_eR7MGgaM1N7puNqdsiX1Prv9FdX0cGQAQ2C3Hy8b02hHUh2LDYGNxLv-ZF0F9l_kwCBdCbeSsmSGZl324zNydNXKxIjFz-WBDssvKCVpBksu3sMifb3btYjQ&isWaterMark=false");
         byte[] b3 = mergeZipByte(b1, "MySQL军规升级版.docx", b2, "学生名册.xlsx"); //可以从前面查询拿到
-        File tmp = createTmpFile(b3, "配件采购单-流水号-OA审核.zip");//加上流水号 这里有可能不用转
-        System.out.println(tmp.getName());
-        System.out.println(tmp.getAbsolutePath());
+
+
+        //这里有可能不用转 因为有：CooperationFileInfo uploadFile(String businessLine, String businessId, byte[] bytes, String fileName);
+        //这里businessId可以用b1和b2的businessId用-拼接起来，呵呵。fileName按下面规则生产吧
+        //这里写出临时文件是为了便于观察
+        File tmp = createTmpFile(b3, "配件采购单-流水号-OA审核.zip");//加上流水号
     }
 }
