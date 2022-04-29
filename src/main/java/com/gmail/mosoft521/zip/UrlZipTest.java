@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import lombok.Cleanup;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,20 +48,20 @@ public class UrlZipTest {
             return outputStream.toByteArray();
         } catch (IOException e) {
 //            log.error("文件下载异常: {}", ExceptionUtil.stacktraceToString(e));
-            throw new Exception(String.format("文件下载失败, %s", e.getMessage()));
+            throw new Exception(String.format("文件%s下载失败, %s", fileUrl, e.getMessage()));
         }
     }
 
     //1-2 byte[]转临时文件
     public static File createTmpFile(byte[] bytes, String fileName) throws IOException {
         String[] fileNames = fileName.split("\\.");
-        File tempFile = File.createTempFile(fileNames[0], "."+fileNames[1]);
+        File tempFile = File.createTempFile(fileNames[0], "." + fileNames[1]);
         FileUtil.writeBytes(bytes, tempFile);
         return tempFile;
     }
 
     //2.把多个文件流合成zip输出流
-    public static byte[] regularZipByte(List<File> fileList) throws Exception {
+    public static byte[] mergeZipByte(byte[] b1, String fileName1, byte[] b2, String fileName2) throws Exception {
         byte[] arr = new byte[0];
         try {
             @Cleanup //使用该注解能够自动释放io资源
@@ -68,23 +69,27 @@ public class UrlZipTest {
             @Cleanup //使用该注解能够自动释放io资源
             ZipOutputStream zipOut = new ZipOutputStream(outputStream);
             // 如果有重复的名称, 则重命名
-            for (File file : fileList) {
-//                zipOut.putNextEntry(new ZipEntry(file.getAbsolutePath()));
-//                byte[] fileUrlByte = getFileUrlByte(file.getAbsolutePath());
-//                zipOut.write(fileUrlByte);
 
-                try (
-                        InputStream in = new BufferedInputStream(
-                                new FileInputStream(file))
-                ) {
-//                    zipOut.putNextEntry(new ZipEntry(file.getAbsolutePath()));
-                    zipOut.putNextEntry(new ZipEntry(file.getName()));
-                    int c;
-                    while ((c = in.read()) != -1)
-                        zipOut.write(c);
-                }
-                zipOut.flush();
+            try (
+                    InputStream in = new BufferedInputStream(
+                            new ByteArrayInputStream(b1))
+            ) {
+                zipOut.putNextEntry(new ZipEntry(fileName1));
+                int c;
+                while ((c = in.read()) != -1)
+                    zipOut.write(c);
             }
+            zipOut.flush();
+            try (
+                    InputStream in = new BufferedInputStream(
+                            new ByteArrayInputStream(b2))
+            ) {
+                zipOut.putNextEntry(new ZipEntry(fileName2));
+                int c;
+                while ((c = in.read()) != -1)
+                    zipOut.write(c);
+            }
+            zipOut.flush();
             zipOut.finish();
             outputStream.flush();
             arr = outputStream.toByteArray();
@@ -99,13 +104,8 @@ public class UrlZipTest {
     public static void main(String[] args) throws Exception {
         byte[] b1 = getFileUrlByte("http://yonbip-biz-dev.yonyouauto.com/iuap-apcom-file/rest/v1/server/file/6267d8f26da925003ece065c/ocstream?downThumb=false&token=KkuwudqZwFyRFH-f5o-UVzRIoJ1vp7rEtVJNXYFRdr6uqurwAX_TF26AQNPPgzCn8uBGNgHXFjwCDZMfH7PE8kfApuJhmlKVMj0G7YALrCO40LJBjKo07q5D1xCN9AwpAR_r3CHpLhzqqFfPGBXrJ_Eevdw9qZglMdg6RGyp96rQYmEjUUElLgDt94yIKb7GxgoMNk6PrA4Osq1bQ-sAqc-Tv3dlCd4XDBVv9YqN8NWxSFr722uJpsbi62Z1cN9mX63IjueQ8ZAaenTjpfk-0gmVFWFuC3wcBAYxJaIQ2vnHHumPrAMtWlWwLY4pcfsEjwDZdyuajlRnfA1b6OaJOQ&isWaterMark=false");
         byte[] b2 = getFileUrlByte("http://yonbip-biz-dev.yonyouauto.com/iuap-apcom-file/rest/v1/server/file/6267d92e6da925003ece065d/ocstream?downThumb=false&token=NwBhD5jQ08m2a9L7XKNge3gfmLhvWBv0aGfbPQwMj28cqV-vP4WFwKCROFLiL90uEcDrcK3Noct6N4HnCVnJMi7onLHVixjFg04iYjAJ1SvWypFhcXVmmyCspnSIfuHOfVeHUbnqRET2O4Yvinq0fTdxSanzUIXJVaJPBZZO-abJxQ2ZZOGH4ApyUoU4JJAdiD_0YG9K3_UpIg8eo_j8vbvat8QtA_eR7MGgaM1N7puNqdsiX1Prv9FdX0cGQAQ2C3Hy8b02hHUh2LDYGNxLv-ZF0F9l_kwCBdCbeSsmSGZl324zNydNXKxIjFz-WBDssvKCVpBksu3sMifb3btYjQ&isWaterMark=false");
-        File file1 = createTmpFile(b1, "MySQL军规升级版.docx");//可以从前面查询拿到
-        File file2 = createTmpFile(b2, "学生名册.xlsx");//可以从前面查询拿到
-        List<File> fileList = new ArrayList<File>();
-        fileList.add(file1);
-        fileList.add(file2);
-        byte[] b3 = regularZipByte(fileList);
-        File tmp = createTmpFile(b3, "配件采购单lshOA审核.zip");//加上流水号
+        byte[] b3 = mergeZipByte(b1, "MySQL军规升级版.docx", b2, "学生名册.xlsx"); //可以从前面查询拿到
+        File tmp = createTmpFile(b3, "配件采购单-流水号-OA审核.zip");//加上流水号 这里有可能不用转
         System.out.println(tmp.getName());
         System.out.println(tmp.getAbsolutePath());
     }
