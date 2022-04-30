@@ -14,8 +14,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class StreamZipTest {
-    private static int BYTE_LENGTH = 1024;
-
     //1. 把url的转成字节数据
     public static InputStream getFileUrlStream(String fileUrl) throws Exception {
         try {
@@ -27,8 +25,7 @@ public class StreamZipTest {
             if (code != HttpURLConnection.HTTP_OK) {
                 throw new Exception("文件读取失败");
             }
-            InputStream is = url.openStream();
-            return is;
+            return url.openStream();
         } catch (IOException e) {
 //            log.error("文件下载异常: {}", ExceptionUtil.stacktraceToString(e));
             throw new Exception(String.format("文件%s下载失败, %s", fileUrl, e.getMessage()));
